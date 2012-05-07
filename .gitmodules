@@ -1,0 +1,3 @@
+[submodule "vendor/html-minifier"]
+	path = vendor/html-minifier
+	url = https://github.com/kangax/html-minifier.git
