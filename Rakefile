@@ -6,10 +6,14 @@ end
 
 require 'submodule'
 class HtmlMinifierSubmodule  < Submodule::Task
-    # def test
-    # end
-    # def after_pull
-    # end
+  # def test
+  # end
+  def after_pull
+    %w{htmlparser htmllint htmlminifier}.each do |i|
+      cp "vendor/html-minifier/src#{i}.js", "lib/js/#{i}.js"
+      sh "git add lib/js/#{i}.js"
+    end
+  end
 end
 HtmlMinifierSubmodule.new
 

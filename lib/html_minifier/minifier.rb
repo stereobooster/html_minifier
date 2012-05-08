@@ -8,28 +8,42 @@ module HtmlMinifier
   class Minifier
     Error = ExecJS::Error
 
-    # SourcePath = File.expand_path("../../js/minify.js", __FILE__)
+    SourceBasePath = File.expand_path("../../js/", __FILE__)
 
     def initialize(options = nil)
       if options.instance_of? Hash then
+        @log = options.delete :log
         @options = options.dup
       elsif options.nil?
         @options = nil
       else
         raise 'Unsupported option for HtmlMinifier: ' + options.to_s
       end
-      # @context = ExecJS.compile(File.open(SourcePath, "r:UTF-8").read)
+
+      js = %w{exports htmlparser htmllint htmlminifier}.map do |i|
+        File.open("#{SourceBasePath}/#{i}.js", "r:UTF-8").read
+      end.join("\n")
+      @context = ExecJS.compile(js)
     end
 
     def minify(source)
-      source
-      # source = source.respond_to?(:read) ? source.read : source.to_s
-      # if @options.nil? then
-      #   js = "return minify(#{MultiJson.dump(source)});"
-      # else
-      #   js = "return minify(#{MultiJson.dump(source)}, #{MultiJson.dump(@options)});"
-      # end
-      # @context.exec js
+      source = source.respond_to?(:read) ? source.read : source.to_s
+      js = []
+      if @options.nil? then
+        js << "var min = exports.minify(#{MultiJson.dump(source)});"
+      else
+        js << "var min = exports.minify(#{MultiJson.dump(source)}, #{MultiJson.dump(@options)});"
+      end
+      js << "var logs = exports.console.get();"
+      js << "exports.console.clear();"
+      js << "return {min:min, logs:logs};"
+      result = @context.exec js.join("\n")
+      if log
+        result["logs"].each do |i|
+          log.info i
+        end
+      end
+      result["min"]
     end
   end
 
