@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["slavic"]
   s.email       = ["stereobooster@gmail.com"]
   s.homepage    = "https://github.com/stereobooster/html_minifier"
-  s.summary     = %q{Ruby wrapper for kangax html-minifier}
-  s.description = %q{Ruby wrapper for kangax html-minifier}
+  s.summary     = %q{Ruby wrapper for kangax js library html-minifier. If you want pure ruby use html_press}
+  s.description = %q{Ruby wrapper for kangax js library html-minifier. If you want pure ruby use html_press}
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")

@@ -1,7 +1,7 @@
 # HtmlMinifier
 [![Build Status](https://secure.travis-ci.org/stereobooster/html_minifier.png?branch=master)](http://travis-ci.org/stereobooster/html_minifier)
 
-Ruby wrapper for [html-minifier](https://github.com/kangax/html-minifier/).
+Ruby wrapper for js library [html-minifier](https://github.com/kangax/html-minifier/). If you want pure ruby use [html_press](https://github.com/stereobooster/html_press) 
 
 ## Installation
 
@@ -19,15 +19,6 @@ require 'html_minifier'
 HtmlMinifier.minify(File.read("source.html"))
 ```
 
-Or you can use it with rake
-
-```ruby
-require "html_minifier/task"
-HtmlMinifier::Task.new :html do |t|
-  t.pattern = 'static/**/*.html'
-end
-```
-
 When initializing `HtmlMinifier`, you can pass options
 
 ```ruby
@@ -38,6 +29,6 @@ HtmlMinifier.minify(source, <options>)
 
 ## TODO
 
- - add more tests
+ - add Rake task
  - add color reporter. Maybe [colorize](https://github.com/fazibear/colorize)
  - add cli
