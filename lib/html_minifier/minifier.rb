@@ -12,15 +12,15 @@ module HtmlMinifier
 
     def initialize(options = nil)
       if options.instance_of? Hash then
-        @log = options.delete :log
         @options = options.dup
+        @log = @options.delete :log
       elsif options.nil?
         @options = nil
       else
         raise 'Unsupported option for HtmlMinifier: ' + options.to_s
       end
 
-      js = %w{exports htmlparser htmllint htmlminifier}.map do |i|
+      js = %w{console htmlparser htmllint htmlminifier}.map do |i|
         File.open("#{SourceBasePath}/#{i}.js", "r:UTF-8").read
       end.join("\n")
       @context = ExecJS.compile(js)
@@ -30,17 +30,15 @@ module HtmlMinifier
       source = source.respond_to?(:read) ? source.read : source.to_s
       js = []
       if @options.nil? then
-        js << "var min = exports.minify(#{MultiJson.dump(source)});"
+        js << "var min = minify(#{MultiJson.dump(source)});"
       else
-        js << "var min = exports.minify(#{MultiJson.dump(source)}, #{MultiJson.dump(@options)});"
+        js << "var min = minify(#{MultiJson.dump(source)}, #{MultiJson.dump(@options)});"
       end
-      js << "var logs = exports.console.get();"
-      js << "exports.console.clear();"
-      js << "return {min:min, logs:logs};"
+      js << "return {min:min, logs:console.clear()};"
       result = @context.exec js.join("\n")
-      if log
+      if @log.respond_to?(:info)
         result["logs"].each do |i|
-          log.info i
+          @log.info i
         end
       end
       result["min"]
