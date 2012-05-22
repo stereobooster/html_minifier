@@ -23,7 +23,7 @@ Submodule::Task.new do |t|
     require "execjs"
     context = ExecJS.compile js.join("\n")
     result = context.exec "return QUnit.result();"
-    if result["assertions"].respond_to?(:each)
+    if result["fail"] > 0 && result["assertions"].respond_to?(:each)
       puts "Failures:"
       i = 1
       result["assertions"].each do |test, details|
@@ -43,7 +43,7 @@ Submodule::Task.new do |t|
 
   t.after_pull do
     %w{htmlparser htmllint htmlminifier}.each do |i|
-      cp "vendor/html-minifier/src#{i}.js", "lib/js/#{i}.js"
+      cp "vendor/html-minifier/src/#{i}.js", "lib/js/#{i}.js"
       sh "git add lib/js/#{i}.js"
     end
   end

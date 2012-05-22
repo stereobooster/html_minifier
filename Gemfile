@@ -1,6 +1,6 @@
 source "http://rubygems.org"
 
-# Specify your gem's dependencies in jshintrb.gemspec
+# Specify your gem's dependencies in gemspec
 gemspec
 
 # Depend on defined ExecJS runtime
