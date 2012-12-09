@@ -23,6 +23,7 @@ module HtmlMinifier
       js = %w{console htmlparser htmllint htmlminifier}.map do |i|
         File.open("#{SourceBasePath}/#{i}.js", "r:UTF-8").read
       end.join("\n")
+      js = "function globe(){#{js};return this};var global = new globe();"
       @context = ExecJS.compile(js)
     end
 
@@ -30,11 +31,12 @@ module HtmlMinifier
       source = source.respond_to?(:read) ? source.read : source.to_s
       js = []
       if @options.nil? then
-        js << "var min = minify(#{MultiJson.dump(source)});"
+        js << "var min = global.minify(#{MultiJson.dump(source)});"
       else
-        js << "var min = minify(#{MultiJson.dump(source)}, #{MultiJson.dump(@options)});"
+        js << "var min = global.minify(#{MultiJson.dump(source)}, #{MultiJson.dump(@options)});"
       end
-      js << "return {min:min, logs: (function(global){return global.console.clear()}(this)) };"
+      js << "return {min:min, logs:global.console.clear()};"
+
       result = @context.exec js.join("\n")
       if @log.respond_to?(:info)
         result["logs"].each do |i|

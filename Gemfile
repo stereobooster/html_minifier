@@ -7,7 +7,6 @@ gemspec
 execjs_runtimes = {
   "RubyRacer" => "therubyracer",
   "RubyRhino" => "therubyrhino",
-  "Mustang" => "mustang"
 }
 
 if ENV["EXECJS_RUNTIME"] && execjs_runtimes[ENV["EXECJS_RUNTIME"]]

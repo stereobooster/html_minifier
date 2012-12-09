@@ -41,4 +41,4 @@
         return result;
     };
 
-}( QUnit ));
+}( this.QUnit ));
