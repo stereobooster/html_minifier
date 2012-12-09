@@ -34,7 +34,7 @@ module HtmlMinifier
       else
         js << "var min = minify(#{MultiJson.dump(source)}, #{MultiJson.dump(@options)});"
       end
-      js << "return {min:min, logs:console.clear()};"
+      js << "return {min:min, logs: (function(global){return global.console.clear()}(this)) };"
       result = @context.exec js.join("\n")
       if @log.respond_to?(:info)
         result["logs"].each do |i|

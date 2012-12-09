@@ -5,7 +5,7 @@ require "html_minifier/version"
 Gem::Specification.new do |s|
   s.name        = "html_minifier"
   s.version     = HtmlMinifier::VERSION
-  s.authors     = ["slavic"]
+  s.authors     = ["stereobooster"]
   s.email       = ["stereobooster@gmail.com"]
   s.homepage    = "https://github.com/stereobooster/html_minifier"
   s.summary     = %q{Ruby wrapper for kangax js library html-minifier. If you want pure ruby use html_press}
@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency "rspec"
   s.add_development_dependency "submodule", ">= 0.1.0"
-  s.add_runtime_dependency "rake"
+  s.add_development_dependency "rake"
 
   s.add_dependency "multi_json", ">= 1.3"
   s.add_dependency "execjs"

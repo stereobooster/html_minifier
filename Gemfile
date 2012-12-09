@@ -12,5 +12,8 @@ execjs_runtimes = {
 
 if ENV["EXECJS_RUNTIME"] && execjs_runtimes[ENV["EXECJS_RUNTIME"]]
   gem execjs_runtimes[ENV["EXECJS_RUNTIME"]], :group => :development
+  if execjs_runtimes[ENV["EXECJS_RUNTIME"]] == "therubyracer"
+    gem 'libv8', '~> 3.11.8', :group => :development
+  end
 end
 
