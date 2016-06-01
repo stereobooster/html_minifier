@@ -22,7 +22,7 @@ HtmlMinifier.minify(File.read("source.html"))
 When initializing `HtmlMinifier`, you can pass options
 
 ```ruby
-HtmlMinifier::minifier.new( <options> ).minify(source)
+HtmlMinifier::Minifier.new( <options> ).minify(source)
 # Or
 HtmlMinifier.minify(source, <options>)
 ```
